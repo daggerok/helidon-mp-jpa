@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.daggerok</groupId>
+    <artifactId>helidon-mp-jpa</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <mainClass>com.github.daggerok.Main</mainClass>
+
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <encoding>UTF-8</encoding>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+
+        <vavr.version>0.10.2</vavr.version>
+        <log4j.version>2.12.1</log4j.version>
+        <lombok.version>1.18.8</lombok.version>
+        <helidon.version>1.2.1</helidon.version>
+
+        <jandex.version>2.0.4.Final</jandex.version>
+        <jandex-maven-plugin.version>1.0.5</jandex-maven-plugin.version>
+        <!-- for some reasons jandex-maven-plugin.version 1.0.6 fails... -->
+
+        <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
+        <spotbugs-maven-plugin.version>3.1.12.2</spotbugs-maven-plugin.version>
+        <jersey-media-json-processing.version>2.29</jersey-media-json-processing.version>
+        <jackson-jaxrs-json-provider.version>2.10.0.pr1</jackson-jaxrs-json-provider.version>
+
+        <!-- Helidon MP JPA related... -->
+        <h2.version>1.4.199</h2.version>
+        <weld-jta.version>3.0.3.Final</weld-jta.version>
+        <microbean-jpa-cdi.version>0.4.1</microbean-jpa-cdi.version>
+        <hibernate-core.version>5.4.4.Final</hibernate-core.version>
+        <javax.persistence-api.version>2.2</javax.persistence-api.version>
+        <microbean-jpa-weld-se.version>0.4.2</microbean-jpa-weld-se.version>
+        <deltaspike-data-module.version>1.9.1</deltaspike-data-module.version>
+        <hibernate-validator-cdi.version>6.0.17.Final</hibernate-validator-cdi.version>
+        <org.eclipse.persistence.jpa.version>2.7.3</org.eclipse.persistence.jpa.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.helidon</groupId>
+                <artifactId>helidon-bom</artifactId>
+                <version>${helidon.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Helidon MicroProfile JPA: begin (required) -->
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-data-module-impl</artifactId>
+            <version>${deltaspike-data-module.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>runtime</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-core.version}</version>
+            <optional>true</optional>
+            <scope>provided</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.module</groupId>
+            <artifactId>weld-jta</artifactId>
+            <version>${weld-jta.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <version>${org.eclipse.persistence.jpa.version}</version>
+            <scope>runtime</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.microbean</groupId>
+            <artifactId>microbean-jpa-cdi</artifactId>
+            <version>${microbean-jpa-cdi.version}</version>
+            <scope>runtime</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.microbean</groupId>
+            <artifactId>microbean-jpa-weld-se</artifactId>
+            <version>${microbean-jpa-weld-se.version}</version>
+            <scope>runtime</scope>
+            <type>jar</type>
+        </dependency>
+        <!-- Helidon MicroProfile JPA: end -->
+
+        <!-- Helidon MP -->
+        <dependency>
+            <groupId>io.helidon.microprofile.bundles</groupId>
+            <artifactId>helidon-microprofile-2.2</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.openapi</groupId>
+            <artifactId>microprofile-openapi-api</artifactId>
+            <type>jar</type>
+        </dependency>
+
+        <!-- Helidon HOCON config required: -->
+        <dependency>
+            <groupId>io.helidon.config</groupId>
+            <artifactId>helidon-config-hocon</artifactId>
+            <type>jar</type>
+        </dependency>
+
+        <!-- Hellidon CDI -->
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jandex</artifactId>
+            <version>${jandex.version}</version>
+            <type>jar</type>
+        </dependency>
+
+        <!-- JSON* -->
+        <!-- requires to fix helidon's JAX-RS JSON serialization issues related to JsonObject / JsonArray... -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-processing</artifactId>
+            <version>${jersey-media-json-processing.version}</version>
+            <type>jar</type>
+        </dependency>
+        <!-- requires to fix helidon's JAX-RS JSON serialization issues related to Collections... -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <version>${jackson-jaxrs-json-provider.version}</version>
+            <type>jar</type>
+        </dependency>
+
+        <!-- In java we trust... -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <optional>true</optional>
+            <scope>provided</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>${vavr.version}</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>clean spotbugs:check package</defaultGoal>
+
+        <plugins>
+            <!-- fat jar -->
+            <plugin>
+                <groupId>com.github.chrisdchristo</groupId>
+                <artifactId>capsule-maven-plugin</artifactId>
+                <version>${capsule-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <fileDesc>-all</fileDesc>
+                            <appClass>${mainClass}</appClass>
+                            <type>fat</type>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- CDI index -->
+            <plugin>
+                <groupId>org.jboss.jandex</groupId>
+                <artifactId>jandex-maven-plugin</artifactId>
+                <version>${jandex-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>make-index</id>
+                        <goals>
+                            <goal>jandex</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- In safe with SptBugs... -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs-maven-plugin.version}</version>
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <xmlOutput>true</xmlOutput>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs-maven-plugin.version}</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
+</project>
