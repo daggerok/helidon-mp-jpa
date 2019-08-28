@@ -42,7 +42,7 @@ jobs:
   include:
 
   - stage: test
-    name: microprofile-jpa
+    name: helidon-mp-jpa
     jdk: openjdk8
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw >/dev/null
@@ -67,7 +67,7 @@ jobs:
     script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
 
   - stage: test
-    name: microprofile-jpa jdk11
+    name: helidon-mp-jpa jdk11
     jdk: openjdk11
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw >/dev/null
