@@ -48,8 +48,6 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw >/dev/null
     - java -jar $TRAVIS_BUILD_DIR/target/*-all.jar  &
     - wait_for 8080
-    - http :8080/bank-account username=username balance=123.45
-    - http :8080/bank-account
     - http :8080
     - http :8080/not-found ololo=trololo
     - http :8080 hello=world
@@ -58,7 +56,9 @@ jobs:
     - http :8080/health
     - http :8080/metrics
     - http :8080/metrics Accept:application/json
-    - http :8080/static/microprofile-quickstart-integration-tests.http
+    - http :8080/static/helidon-mp-jpa-integration-tests.http
+    - http :8080/bank-account username=username balance=123.45
+    - http :8080/bank-account
     - stop_any 80 8080
 
   - stage: test
@@ -73,8 +73,6 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw >/dev/null
     - java -jar $TRAVIS_BUILD_DIR/target/*-all.jar  &
     - wait_for 8080
-    - http :8080/bank-account username=username balance=123.45
-    - http :8080/bank-account
     - http :8080
     - http :8080/not-found ololo=trololo
     - http :8080 hello=world
@@ -83,7 +81,9 @@ jobs:
     - http :8080/health
     - http :8080/metrics
     - http :8080/metrics Accept:application/json
-    - http :8080/static/microprofile-quickstart-integration-tests.http
+    - http :8080/static/helidon-mp-jpa-integration-tests.http
+    - http :8080/bank-account username=username balance=123.45
+    - http :8080/bank-account
     - stop_any 80 8080
 
   - stage: test
