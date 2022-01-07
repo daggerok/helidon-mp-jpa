@@ -35,7 +35,7 @@
         <jackson-jaxrs-json-provider.version>2.10.0.pr1</jackson-jaxrs-json-provider.version>
 
         <!-- Helidon MP JPA related... -->
-        <h2.version>1.4.199</h2.version>
+        <h2.version>2.0.206</h2.version>
         <weld-jta.version>3.0.3.Final</weld-jta.version>
         <microbean-jpa-cdi.version>0.4.1</microbean-jpa-cdi.version>
         <hibernate-core.version>5.4.4.Final</hibernate-core.version>
