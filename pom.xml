@@ -38,7 +38,7 @@
         <h2.version>1.4.199</h2.version>
         <weld-jta.version>3.0.3.Final</weld-jta.version>
         <microbean-jpa-cdi.version>0.4.1</microbean-jpa-cdi.version>
-        <hibernate-core.version>5.4.4.Final</hibernate-core.version>
+        <hibernate-core.version>5.4.24.Final</hibernate-core.version>
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
         <microbean-jpa-weld-se.version>0.4.2</microbean-jpa-weld-se.version>
         <deltaspike-data-module.version>1.9.1</deltaspike-data-module.version>
